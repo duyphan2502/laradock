@@ -11,7 +11,9 @@
         "illuminate/redis": "^5.4",
         "indatus/laravel-ps-redis": "^2.0",
         "laravel/framework": "5.4.*",
-        "laravel/tinker": "~1.0"
+        "laravel/tinker": "~1.0",
+        "morilog/infinity-cache": "^1.0",
+        "swagger-api/swagger-ui": "^2.2"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

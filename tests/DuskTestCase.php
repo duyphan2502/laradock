@@ -5,10 +5,25 @@ namespace Tests;
 use Laravel\Dusk\TestCase as BaseTestCase;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
 use Facebook\WebDriver\Remote\DesiredCapabilities;
+use Illuminate\Contracts\Console\Kernel;
 
 abstract class DuskTestCase extends BaseTestCase
 {
-    use CreatesApplication;
+    /**
+     * Creates the application.
+     *
+     * @return \Illuminate\Foundation\Application
+     */
+    public function createApplication()
+    {
+        putenv('APP_URL=http://laravel.local:88');
+        putenv('DB_DATABASE=db_name');
+        $app = require __DIR__.'/../bootstrap/app.php';
+
+        $app->make(Kernel::class)->bootstrap();
+
+        return $app;
+    }
 
     /**
      * Prepare for Dusk test execution.

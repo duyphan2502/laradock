@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Astro\Client as AstroClient;
+use App\Services\BroadcastingProvider;
 use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
@@ -49,6 +50,11 @@ class AppServiceProvider extends ServiceProvider
                 return new AstroClient($httpClient, env('ASTRO_ENDPOINT', 'http://ams-api.astro.com.my'));
             }
         );
+
+        $this->app->singleton(
+            BroadcastingProvider::class
+        );
+        app(BroadcastingProvider::class)->registerProvider(app(\App\Astro\Client::class));
     }
 
     /**

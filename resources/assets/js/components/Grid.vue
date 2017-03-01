@@ -77,7 +77,7 @@
             },
             fetchChannels: function () {
                 this.$http.get('/api/channels').then(response => {
-                    this.channels = response.body.channels;
+                    this.channels = response.body.data;
                     this.save();
                 }, response => {
                     // error callback

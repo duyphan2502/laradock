@@ -13,7 +13,8 @@ trait CreatesApplication
      */
     public function createApplication()
     {
-        putenv('APP_URL=http://laravel.local:88');
+        putenv('APP_URL=http://laravel.local');
+        putenv('DB_DATABASE=db_name');
         $app = require __DIR__.'/../bootstrap/app.php';
 
         $app->make(Kernel::class)->bootstrap();

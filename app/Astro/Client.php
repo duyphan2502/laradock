@@ -1,11 +1,16 @@
 <?php
+declare(strict_types = 1);
+
 namespace App\Astro;
 
+use App\DTO\AstroChannel;
+use App\Services\ContentProvider;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Psr7\Request;
 
-class Client
+class Client implements ContentProvider
 {
+    const ASTRO_SERVICE = 'ASTRO';
     /**
      * @var string
      */
@@ -49,16 +54,32 @@ class Client
     {
         $response = $this->client->send($request);
 
-        return \GuzzleHttp\json_decode($response->getBody()->getContents(), true);
+        $channels = \GuzzleHttp\json_decode($response->getBody(), true);
+
+        $channelObjects = [];
+        foreach ($channels['channels'] as $channel) {
+            $channel          = new AstroChannel($channel);
+            $channelObjects[] = $channel;
+        }
+
+        return $channelObjects;
     }
 
     /**
-     * @return array
+     * @return AtroChannel[]
      */
-    public function getChannels()
+    public function getChannels(): array
     {
         $request = new Request('get', sprintf('%s%s', $this->endpoint, static::GET_CHANNELS));
 
         return $this->send($request);
+    }
+
+    /**
+     * @return string
+     */
+    public function getServiceName(): string
+    {
+        return static::ASTRO_SERVICE;
     }
 }

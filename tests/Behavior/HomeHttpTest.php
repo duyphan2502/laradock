@@ -4,7 +4,7 @@ namespace Tests\Behavior;
 
 use Tests\TestCase;
 
-class ExampleTest extends TestCase
+class HomeHttpTest extends TestCase
 {
     /**
      * A basic test example.

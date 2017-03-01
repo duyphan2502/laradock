@@ -32,7 +32,7 @@ return [
     */
 
     'connections' => [
-        'mysql' => [
+        'default' => [
             'driver'    => 'mysql',
             'host'      => env('DB_HOST', 'mysql'),
             'port'      => env('DB_PORT', '3306'),

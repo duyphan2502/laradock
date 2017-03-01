@@ -21,5 +21,6 @@ $api->version(
          * @var $api Router
          */
         $api->get('channels', \App\Http\Controllers\ChannelController::class.'@channels');
+        $api->post('channel', \App\Http\Controllers\ChannelController::class.'@favourite');
     }
 );

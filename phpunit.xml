@@ -10,7 +10,7 @@
          stopOnFailure="false">
     <testsuites>
         <testsuite name="Feature Tests">
-            <directory suffix="Test.php">./tests/Feature</directory>
+            <directory suffix="Test.php">./tests/Behavior</directory>
         </testsuite>
 
         <testsuite name="Unit Tests">
@@ -22,16 +22,12 @@
             <directory suffix=".php">./app</directory>
         </whitelist>
     </filter>
-    <php>
-        <env name="APP_ENV" value="testing"/>
-        <env name="CACHE_DRIVER" value="array"/>
-        <env name="SESSION_DRIVER" value="array"/>
-        <env name="QUEUE_DRIVER" value="sync"/>
-        <env name="API_STANDARDS_TREE" value="x"/>
-        <env name="API_SUBTYPE" value="prime"/>
-        <env name="API_DOMAIN" value="127.0.0.1"/>
-        <env name="API_VERSION" value="v2"/>
-        <env name="API_PREFIX" value="api"/>
-        <env name="API_DEFAULT_FORMAT" value="json"/>
-    </php>
+
+    <!-- COVERAGE -->
+    <logging>
+        <log type="coverage-html" target="./build/coverage/html" lowUpperBound="35"
+             highLowerBound="70"/>
+        <log type="coverage-clover" target="./build/coverage/coverage.xml"/>
+        <log type="coverage-php" target="./build/coverage/coverage.serialized"/>
+    </logging>
 </phpunit>
