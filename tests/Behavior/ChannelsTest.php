@@ -27,7 +27,7 @@ class ChannelsTest extends TestCase
             );
         $response = $this->post('/api/channel', ['token' => 'some-token', 'channel' => 102]);
 
-        $response->assertStatus(200);
+        $response->assertStatus(202);
         $this->assertDatabaseHas('favourite_history', ['token' => 'some-token', 'channel' => 102]);
     }
 }

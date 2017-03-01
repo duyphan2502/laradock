@@ -14,7 +14,7 @@ class FavouriteRepository
 {
     /**
      * @param string $token
-     * @param int $channel
+     * @param int    $channel
      *
      * @return FavouriteModel
      */

@@ -97,6 +97,15 @@
                 else item.favourite = !item.favourite;
 
                 this.$collection.put(item);
+                if (item.favourite)
+                    this.$http.post('/api/channel', {
+                        'channel': item.channelStbNumber,
+                        'token': Laravel
+                    }).then(response => {
+                        console.log(response)
+                    }, response => {
+                        console.log(response)
+                    })
             }
         }
     }

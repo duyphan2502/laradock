@@ -85,8 +85,12 @@ class ChannelController extends Controller
          * @var $repo FavouriteRepository
          */
         $repo = app(FavouriteRepository::class);
-        $repo->saveHistory($request->input('token'), $request->input('channel'));
+        try {
+            $repo->saveHistory($request->input('token'), (int) $request->input('channel'));
+        } catch (\Exception $e) {
+            return $this->response->errorBadRequest('Already set as favourite');
+        }
 
-        $this->response->accepted();
+        return $this->response->accepted();
     }
 }

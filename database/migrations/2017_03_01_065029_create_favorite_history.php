@@ -19,6 +19,7 @@ class CreateFavoriteHistory extends Migration
                 $table->increments('id');
                 $table->integer('channel')->index();
                 $table->string('token');
+                $table->unique(['channel', 'token'], 'historic');
                 $table->timestamp('created_at');
             }
         );
