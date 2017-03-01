@@ -3,7 +3,12 @@
 /public/css
 /public/js
 /public/images
+/public/fonts
+/public/*.js
+/public/mix-manifest.json
 /node_modules
 Homestead.json
 Homestead.yaml
 .env
+resources/views/errors/
+resources/views/vendor/
