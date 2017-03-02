@@ -107,6 +107,7 @@ class BroadcastingProvider
         }
 
         $provider = $this->providers[$provider];
+        $events   = [];
         if ($provider instanceof ContentEventProvider) {
             /**
              * @var $events ChannelEvent[]
@@ -115,10 +116,8 @@ class BroadcastingProvider
             foreach ($events as $event) {
                 $this->resources->saveEvent($event->getData());
             }
-
-            return new Collection($events);
         }
 
-        return [];
+        return new Collection($events);
     }
 }
