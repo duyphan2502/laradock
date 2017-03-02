@@ -377,8 +377,8 @@
                                     <div class="icon icon-go-icon"></div>
                                 </li>
                                 <li class=" Heart tooltipped" alt="FAV logo" data-position="bottom" data-delay="50"
-                                    data-tooltip="My Faverites">
-                                    <div class="icon icon-heart-icon"></div>
+                                    data-tooltip="My Faverites" v-on:click="selectFavourite()">
+                                    <div v-bind:class="{active: isFavourite, icon: true, 'icon-heart-icon': true}"></div>
                                 </li>
                             </ul>
                         </div>
