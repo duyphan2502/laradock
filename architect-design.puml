@@ -1,0 +1,26 @@
+@startuml
+class BroadcastingProvider{
++ registerProvider(ContentProvider)
++ getChannels()
+}
+class ChannelRepository
+interface ContentProvider{
++ getChannels
+}
+interface ContentEventProvider {
++ getChannelEvents
+}
+
+
+note "Content provider must be registered through registerProvider" as N2
+AstroClient .. N2
+N2 .. BroadcastingProvider
+
+class AstroClient
+AstroClient *- ContentProvider
+class AstroClient
+AstroClient *- ContentEventProvider
+
+AstroClient <|-- BroadcastingProvider
+ChannelRepository <|-- BroadcastingProvider
+@enduml

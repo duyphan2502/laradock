@@ -1,0 +1,20 @@
+@startuml
+' Use http://plantuml.com/sequence-diagram to understand how to read diagram
+
+participant User as u
+participant ASTRO_API as A
+participant ASTRO_DB as B
+participant AMS_API as S
+
+=== Get Channels in case ASTRO Database exist ===
+u -> A: GET:/api/channels
+A -> B: Get all channels from resource.
+B -> A: Return sources from Database
+alt Database does not have resource of Content Provider(AMS-API)
+    A -> S: Request content to Service Provider
+    S -> A: Return Content
+    A -> B: Save Content to DB through CRON(workflow)
+end
+A -> u: Return channels as JSON
+
+@enduml
