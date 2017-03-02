@@ -85,12 +85,12 @@ class BroadcastingProvider
     }
 
     /**
-     * @param int $channelId
-     * @param     $provider
+     * @param int    $channelId
+     * @param string $provider
      *
      * @return array|Collection
      */
-    public function getChannelEvents(int $channelId, $provider)
+    public function getChannelEvents(int $channelId, string $provider)
     {
         $events = $this->resources->getEvents($channelId, $provider);
 
@@ -106,14 +106,15 @@ class BroadcastingProvider
             return new Collection($eventObjects);
         }
 
-        $provider = $this->providers[$provider];
-        $events   = [];
-        if ($provider instanceof ContentEventProvider) {
+        $client = $this->providers[$provider];
+        $events = [];
+        if ($client instanceof ContentEventProvider) {
             /**
              * @var $events ChannelEvent[]
              */
-            $events = $provider->getChannelEvents($channelId);
+            $events = $client->getChannelEvents($channelId);
             foreach ($events as $event) {
+                $event->setProvider($provider);
                 $this->resources->saveEvent($event->getData());
             }
         }
