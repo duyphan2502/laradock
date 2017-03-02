@@ -1,5 +1,5 @@
 @startuml
-' Use http://plantuml.com/sequence-diagram to understand how to read diagram
+'paste content to https://www.planttext.com for more detail
 
 participant User as u
 participant ASTRO_API as A
