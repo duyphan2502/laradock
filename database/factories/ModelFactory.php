@@ -43,8 +43,36 @@ $factory->define(
         return [
             'name'           => $faker->name,
             'channel_number' => $faker->numberBetween(100, 200),
-            'channel_id'     => $faker->numberBetween(100, 200),
+            'channel_id'     => $faker->numberBetween(1, 20),
             'provider'       => $faker->userName,
+        ];
+    }
+);
+
+$factory->define(
+    App\Model\ChannelEventModel::class,
+    function (Faker\Generator $faker) {
+        return [
+            'provider'           => $faker->company,
+            'eventID'            => $faker->numberBetween(100, 200),
+            'channelId'          => $faker->numberBetween(100, 200),
+            'channelStbNumber'   => $faker->numberBetween(100, 200),
+            'channelHD'          => $faker->title,
+            'channelTitle'       => $faker->title,
+            'epgEventImage'      => '',
+            'certification'      => $faker->numberBetween(1, 20),
+            'displayDateTimeUtc' => $faker->date('Y-m-d H:i:s'),
+            'displayDateTime'    => $faker->time('H:i:s'),
+            'displayDuration'    => '02:00',
+            'siTrafficKey'       => $faker->bankAccountNumber,
+            'programmeTitle'     => $faker->title,
+            'programmeId'        => '',
+            'episodeId'          => $faker->numberBetween(200, 1000),
+            'shortSynopsis'      => '',
+            'longSynopsis'       => '',
+            'actors'             => $faker->randomElement(['Paul', 'Rasham', 'Kok Toong']),
+            'genre'              => $faker->randomElement(['Movie', 'Documentary', 'Sports']),
+            'subGenre'           => $faker->randomElement(['Personal', 'Professional']),
         ];
     }
 );

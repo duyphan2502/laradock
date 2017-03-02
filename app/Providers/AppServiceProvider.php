@@ -2,8 +2,9 @@
 
 namespace App\Providers;
 
-use App\Astro\Client as AstroClient;
+use App\Repository\ChannelRepository;
 use App\Services\BroadcastingProvider;
+use App\Transformer\AstroModelTransformer;
 use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
@@ -34,7 +35,7 @@ class AppServiceProvider extends ServiceProvider
             $this->app->register(DuskServiceProvider::class);
         }
         $this->app->singleton(
-            AstroClient::class,
+            \App\Astro\Client::class,
             function () {
 
                 $stack = $this->getClientHandler();
@@ -47,14 +48,18 @@ class AppServiceProvider extends ServiceProvider
                     ]
                 );
 
-                return new AstroClient($httpClient, env('ASTRO_ENDPOINT', 'http://ams-api.astro.com.my'));
+                return new \App\Astro\Client($httpClient, env('ASTRO_ENDPOINT', 'http://ams-api.astro.com.my'));
             }
         );
 
         $this->app->singleton(
-            BroadcastingProvider::class
+            BroadcastingProvider::class,
+            function () {
+                $provider = new BroadcastingProvider(app(ChannelRepository::class), app(AstroModelTransformer::class));
+
+                return $provider->registerProvider(app(\App\Astro\Client::class));
+            }
         );
-        app(BroadcastingProvider::class)->registerProvider(app(\App\Astro\Client::class));
     }
 
     /**

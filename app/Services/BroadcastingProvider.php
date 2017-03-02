@@ -3,6 +3,8 @@ declare(strict_types = 1);
 
 namespace App\Services;
 
+use App\DTO\ChannelEvent;
+use App\Model\ChannelEventModel;
 use App\Repository\ChannelRepository;
 use App\Transformer\AstroModelTransformer;
 use Illuminate\Support\Collection;
@@ -27,7 +29,7 @@ class BroadcastingProvider
     /**
      * @var AstroModelTransformer
      */
-    private $transformer;
+    private $channelTransformer;
 
     /**
      * BroadcastingProvider constructor.
@@ -37,9 +39,9 @@ class BroadcastingProvider
      */
     public function __construct(ChannelRepository $repository, AstroModelTransformer $transformer)
     {
-        $this->providers   = [];
-        $this->resources   = $repository;
-        $this->transformer = $transformer;
+        $this->providers          = [];
+        $this->resources          = $repository;
+        $this->channelTransformer = $transformer;
     }
 
     /**
@@ -65,7 +67,7 @@ class BroadcastingProvider
         $channels         = $this->resources->getChannels($provider);
         if ($channels->count()) {
             foreach ($channels->getIterator() as $channel) {
-                $providerChannels[] = $this->transformer->transform($channel);
+                $providerChannels[] = $this->channelTransformer->transform($channel);
             }
 
             return new Collection($providerChannels);
@@ -80,5 +82,43 @@ class BroadcastingProvider
         }
 
         return new Collection($channels);
+    }
+
+    /**
+     * @param int $channelId
+     * @param     $provider
+     *
+     * @return array|Collection
+     */
+    public function getChannelEvents(int $channelId, $provider)
+    {
+        $events = $this->resources->getEvents($channelId, $provider);
+
+        if ($events->count()) {
+            $eventObjects = [];
+            /**
+             * @var $event ChannelEventModel
+             */
+            foreach ($events->getIterator() as $event) {
+                $eventObjects[] = new ChannelEvent($event->getAttributes());
+            }
+
+            return new Collection($eventObjects);
+        }
+
+        $provider = $this->providers[$provider];
+        if ($provider instanceof ContentEventProvider) {
+            /**
+             * @var $events ChannelEvent[]
+             */
+            $events = $provider->getChannelEvents($channelId);
+            foreach ($events as $event) {
+                $this->resources->saveEvent($event->getData());
+            }
+
+            return new Collection($events);
+        }
+
+        return [];
     }
 }

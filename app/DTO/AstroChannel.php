@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace App\DTO;
 
+use Swagger\Annotations as SWG;
 use App\Services\ChannelInterface;
 
 /**

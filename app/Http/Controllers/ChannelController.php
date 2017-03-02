@@ -8,6 +8,7 @@ use App\Model\FavouriteModel;
 use App\Repository\FavouriteRepository;
 use App\Services\BroadcastingProvider;
 use App\Transformer\ChannelArrayTransformer;
+use App\Transformer\ChannelEventTransformer;
 use Dingo\Api\Http\Response;
 use Dingo\Api\Routing\Helpers;
 use Illuminate\Http\Request;
@@ -48,8 +49,29 @@ class ChannelController extends Controller
     }
 
     /**
+     * @param $provider
+     * @param $id
+     *
+     * @return mixed
+     */
+    public function channel($provider, $id)
+    {
+        /**
+         * @var $broadcastProvider BroadcastingProvider
+         */
+        $broadcastProvider = app(BroadcastingProvider::class);
+        $events            = $broadcastProvider->getChannelEvents(
+            (int) $id,
+            $provider ?? Client::ASTRO_SERVICE
+        );
+
+        return $this->response->collection($events, app(ChannelEventTransformer::class));
+    }
+
+    /**
+     * @param Request $request
+     *
      * @return Response
-     * @throws \RuntimeException
      * @SWG\Post(
      *     tags={"Channel"},
      *     path="/api/channel/{id}",

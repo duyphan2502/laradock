@@ -25,7 +25,7 @@
 
     <!-- COVERAGE -->
     <logging>
-        <log type="coverage-html" target="./build/coverage/html" lowUpperBound="35"
+        <log type="coverage-html" target="./build/coverage/html" lowUpperBound="80"
              highLowerBound="70"/>
         <log type="coverage-clover" target="./build/coverage/coverage.xml"/>
         <log type="coverage-php" target="./build/coverage/coverage.serialized"/>
