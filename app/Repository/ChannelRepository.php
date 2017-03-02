@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace App\Repository;
 
 use App\Model\ChannelModel;
+use App\Services\ChannelInterface;
 
 /**
  * Class ChannelRepository
@@ -13,14 +14,16 @@ use App\Model\ChannelModel;
 class ChannelRepository
 {
     /**
-     * @param string $name
-     * @param int    $number
+     * @param ChannelInterface $channel
+     * @param string           $provider
      *
      * @return ChannelModel
+     * @internal param int $number
+     *
      */
-    public function saveChannel(string $name, int $number, string $provider)
+    public function saveChannel(ChannelInterface $channel, string $provider)
     {
-        $model = ChannelModel::init($name, $number, $provider);
+        $model = ChannelModel::init($channel, $provider);
 
         $model->save();
 

@@ -4,6 +4,8 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Weburnit\Console\Commands\SwaggerJsonModelGenerator;
+use Weburnit\Console\Commands\SwaggerModelGenerator;
 
 class Kernel extends ConsoleKernel
 {
@@ -13,13 +15,15 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        SwaggerModelGenerator::class,
+        SwaggerJsonModelGenerator::class,
     ];
 
     /**
      * Define the application's command schedule.
      *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
+     * @param  \Illuminate\Console\Scheduling\Schedule $schedule
+     *
      * @return void
      */
     protected function schedule(Schedule $schedule)

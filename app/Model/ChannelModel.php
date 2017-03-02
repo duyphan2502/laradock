@@ -3,6 +3,8 @@ declare(strict_types = 1);
 
 namespace App\Model;
 
+use App\Services\ChannelInterface;
+
 /**
  * Class ChannelModel
  *
@@ -21,21 +23,22 @@ class ChannelModel extends AbstractCacheableModel
     protected $fillable = [
         'name',
         'channel_number',
+        'channel_id',
         'provider',
     ];
 
     /**
-     * @param string $name
-     * @param int    $number
-     * @param string $provider
+     * @param ChannelInterface $channel
+     * @param string           $provider
      *
      * @return ChannelModel
      */
-    public static function init(string $name, int $number, string $provider)
+    public static function init(ChannelInterface $channel, string $provider)
     {
         $model = new static();
-        $model->setName($name);
-        $model->setNumber($number);
+        $model->setName($channel->getName());
+        $model->setNumber($channel->getNumber());
+        $model->setChannelId($channel->getChannelId());
         $model->setProvider($provider);
 
         return $model;
@@ -57,6 +60,26 @@ class ChannelModel extends AbstractCacheableModel
     public function setName(string $name): ChannelModel
     {
         $this->setAttribute('name', $name);
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getChannelId(): int
+    {
+        return $this->getAttribute('channel_id');
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return ChannelModel
+     */
+    public function setChannelId(int $id): ChannelModel
+    {
+        $this->setAttribute('channel_id', $id);
 
         return $this;
     }

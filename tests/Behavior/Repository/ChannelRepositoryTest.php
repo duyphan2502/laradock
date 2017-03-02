@@ -3,6 +3,7 @@ namespace Tests\Behavior;
 
 use App\Model\ChannelModel;
 use App\Repository\ChannelRepository;
+use App\Services\ChannelInterface;
 use Tests\TestCase;
 
 /**
@@ -29,16 +30,30 @@ class ChannelRepositoryTest extends TestCase
     }
 
     /**
+     * @param $id
      * @param $name
      * @param $number
      * @param $provider
      *
      * @dataProvider getProviders
      */
-    public function testSaveChannel($name, $number, $provider)
+    public function testSaveChannel($id, $name, $number, $provider)
     {
-        $this->repo->saveChannel($name, $number, $provider);
-        $this->assertDatabaseHas('channels', ['name' => $name, 'channel_number' => $number, 'provider' => $provider]);
+        $mockChannel = $this->createMock(ChannelInterface::class);
+        $mockChannel->method('getName')->willReturn($name);
+        $mockChannel->method('getNumber')->willReturn($number);
+        $mockChannel->method('getChannelId')->willReturn($id);
+
+        $this->repo->saveChannel($mockChannel, $provider);
+        $this->assertDatabaseHas(
+            'channels',
+            [
+                'name'           => $name,
+                'channel_number' => $number,
+                'channel_id'     => $id,
+                'provider'       => $provider,
+            ]
+        );
     }
 
     public function testGetChannels()
@@ -70,11 +85,13 @@ class ChannelRepositoryTest extends TestCase
     {
         return [
             '#1' => [
+                'id'       => 1,
                 'name'     => 'ASTRO MY',
                 'number'   => 101,
                 'provider' => 'ASTRO',
             ],
             '#2' => [
+                'id'       => 1,
                 'name'     => 'NETFLIX',
                 'number'   => 102,
                 'provider' => 'NFLIX',

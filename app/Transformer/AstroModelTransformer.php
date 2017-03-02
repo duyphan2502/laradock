@@ -19,7 +19,11 @@ class AstroModelTransformer
      */
     public function transform(ChannelModel $model)
     {
-        $data = ['channelTitle' => $model->getName(), 'channelStbNumber' => $model->getNumber()];
+        $data = [
+            'channelTitle'     => $model->getName(),
+            'channelStbNumber' => $model->getNumber(),
+            'channelId'        => $model->getChannelId(),
+        ];
 
         $channel = new AstroChannel($data);
 

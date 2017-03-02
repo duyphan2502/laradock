@@ -13,6 +13,10 @@ class ChannelArrayTransformer extends TransformerAbstract
      */
     public function transform(ChannelInterface $channel)
     {
-        return ['channelTitle' => $channel->getName(), 'channelStbNumber' => $channel->getNumber()];
+        return [
+            'channelTitle'     => $channel->getName(),
+            'channelStbNumber' => $channel->getNumber(),
+            'channelId'        => $channel->getChannelId(),
+        ];
     }
 }

@@ -19,4 +19,9 @@ interface ChannelInterface
      * @return int
      */
     public function getNumber(): int;
+
+    /**
+     * @return int
+     */
+    public function getChannelId(): int;
 }

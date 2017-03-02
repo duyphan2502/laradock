@@ -49,8 +49,8 @@ class BroadCastProviderTest extends \PHPUnit_Framework_TestCase
         $providerService = 'ASTRO';
 
         $channels   = [
-            $this->createPartialMock(ChannelInterface::class, ['getName', 'getNumber']),
-            $this->createPartialMock(ChannelInterface::class, ['getName', 'getNumber']),
+            $this->createPartialMock(ChannelInterface::class, ['getName', 'getNumber', 'getChannelId']),
+            $this->createPartialMock(ChannelInterface::class, ['getName', 'getNumber', 'getChannelId']),
         ];
         $collection = $this->createMock(Collection::class);
         $collection->method('count')->willReturn(0);

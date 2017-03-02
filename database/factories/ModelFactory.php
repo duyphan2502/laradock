@@ -41,9 +41,10 @@ $factory->define(
     App\Model\ChannelModel::class,
     function (Faker\Generator $faker) {
         return [
-            'name'     => $faker->name,
-            'channel_number'   => $faker->numberBetween(100, 200),
-            'provider' => $faker->userName,
+            'name'           => $faker->name,
+            'channel_number' => $faker->numberBetween(100, 200),
+            'channel_id'     => $faker->numberBetween(100, 200),
+            'provider'       => $faker->userName,
         ];
     }
 );

@@ -76,7 +76,7 @@ class BroadcastingProvider
         $channels = $this->providers[$provider]->getChannels();
 
         foreach ($channels as $channel) {
-            $this->resources->saveChannel($channel->getName(), $channel->getNumber(), $provider);
+            $this->resources->saveChannel($channel, $provider);
         }
 
         return new Collection($channels);
